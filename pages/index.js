@@ -1,6 +1,5 @@
 import Head from "next/head";
 import { Inter } from "next/font/google";
-import Image from "next/image";
 import styles from "@/styles/Home.module.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -31,13 +30,15 @@ export default function Home() {
           <span className="mySpan">Foot-Blog</span>
         </h1>
         <div className={styles.imagewrap}>
-          <Image
+          {/* <Image
             className={styles.myImg}
             src="/home.jpg"
             alt=""
             width={237}
             height={158}
-          />
+          /> */}
+          <img className={styles.myImg} src="/home.jpg" alt="Foot-Blog" width={237}
+            height={158} />
         </div>
         <p className={styles.description}>
           A blog for coders, from a coder with the perspective of a coder

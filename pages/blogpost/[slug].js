@@ -1,28 +1,47 @@
-import React from "react";
-import { useRouter } from "next/router";
+import React, { useState } from "react";
+import * as fs from "fs";
 import styles from "../../styles/BlogPost.module.css";
+
 //Step1: Find the file according to the slug
 //Step2: Populate them inside the page
-const slug = () => {
-  const router = useRouter();
-  const { slug } = router.query;
+const Slug = (props) => {
+  const [blog, setBlog] = useState(props.myBlog);
+
   return (
     <div className={styles.container}>
       <main className={styles.main}>
-        <h1>Title of the page {slug}</h1>
+        <h1>{blog && blog.title}</h1>
         <hr />
-        <div>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa
-          officiis veniam velit odio architecto exercitationem iure animi
-          molestias?Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-          Animi debitis eaque ullam? Dolorum vero velit eos facere excepturi nam
-          aut mollitia! Deleniti amet impedit omnis delectus nesciunt cum,
-          rerum, quisquam iusto eveniet iste natus. Saepe, nihil dolore eum
-          corrupti esse optio quibusdam soluta fugit.
-        </div>
+        <div>{blog && blog.content}</div>
       </main>
     </div>
   );
 };
 
-export default slug;
+export async function getStaticPaths() {
+  return {
+    paths: [
+      {
+        params: { slug: 'blog1' },
+      },
+      {
+        params: { slug: 'blog2' },
+      },
+      {
+        params: { slug: 'blog3' },
+      },    ],
+    fallback: true, // false or "blocking"
+  };
+}
+export async function getStaticProps(context) {
+  console.log(context);
+
+  const { slug } = context.params;
+
+  let myBlog = await fs.promises.readFile(`blogdata/${slug}.json`, 'utf-8');
+
+  return {
+    props: { myBlog: JSON.parse(myBlog) },
+  };
+}
+export default Slug;
