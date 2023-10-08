@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const Navbar = () => {
   return (
-    <nav className={styles.mainNav}>
+    <nav className={styles.mainnav}>
         <ul>
           <Link href="/" cursor="pointer">
             <li>Home</li>
@@ -19,7 +19,9 @@ const Navbar = () => {
             <li>Contact</li>
           </Link>
         </ul>
+<hr style={{width: '80%', border: '0.1px rounded black'}}/>
       </nav>
+
   )
 }
 
